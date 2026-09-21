@@ -20,8 +20,7 @@ def chat(request: ChatRequest):
         request.message,
     )
 
-    history = memory.get_history(request.session_id)
-
+    history = memory.get_history(request.session_id)[-10:]
     prompt_parts = [
         "You are DevSentry, an AI-powered DevOps assistant.",
         "Answer clearly and explain technical concepts in simple terms when appropriate.",
