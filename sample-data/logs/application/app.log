@@ -1,0 +1,9 @@
+2026-09-21 10:14:02 INFO Application started successfully
+2026-09-21 10:14:05 INFO Database connection established
+2026-09-21 10:15:21 INFO GET /api/health 200
+2026-09-21 10:16:03 INFO GET /api/users 200
+2026-09-21 10:17:44 ERROR Database connection timeout
+2026-09-21 10:17:45 ERROR Failed to fetch user data
+2026-09-21 10:17:45 ERROR GET /api/users 500
+2026-09-21 10:18:01 WARNING Database connection pool exhausted
+2026-09-21 10:18:10 ERROR Application failed to process request

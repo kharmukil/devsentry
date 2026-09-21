@@ -1,0 +1,8 @@
+2026-09-21 10:05:01 INFO Starting deployment
+2026-09-21 10:05:04 INFO Pulling latest application code
+2026-09-21 10:05:12 INFO Installing dependencies
+2026-09-21 10:05:30 INFO Restarting application service
+2026-09-21 10:05:32 INFO Application service stopped
+2026-09-21 10:05:33 ERROR Failed to start application service
+2026-09-21 10:05:33 ERROR Port 8000 is already in use
+2026-09-21 10:05:34 WARNING Deployment completed with errors

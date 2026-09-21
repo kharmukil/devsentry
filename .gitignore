@@ -29,3 +29,5 @@ Thumbs.db
 dist/
 build/
 *.egg-info/
+# Allow sample logs to be versioned
+!sample-data/logs/**/*.log

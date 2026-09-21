@@ -1,0 +1,6 @@
+2026-09-21 10:00:01 INFO System boot completed
+2026-09-21 10:01:12 INFO SSH service started
+2026-09-21 10:02:45 INFO Disk usage at 42%
+2026-09-21 10:18:01 WARNING Memory usage reached 82%
+2026-09-21 10:19:22 WARNING Available memory below recommended threshold
+2026-09-21 10:20:05 ERROR Application process terminated unexpectedly
