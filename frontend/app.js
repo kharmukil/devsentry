@@ -2,7 +2,12 @@ const chatForm = document.getElementById("chat-form");
 const messageInput = document.getElementById("message-input");
 const messages = document.getElementById("messages");
 
-const sessionId = "local-session";
+let sessionId = localStorage.getItem("devsentry_session_id");
+
+if (!sessionId) {
+    sessionId = crypto.randomUUID();
+    localStorage.setItem("devsentry_session_id", sessionId);
+}
 
 function addMessage(role, text) {
     const message = document.createElement("div");

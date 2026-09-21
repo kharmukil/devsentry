@@ -1,6 +1,7 @@
 import requests
 from fastapi import APIRouter
 
+from backend.app.memory.memory import ConversationMemory
 from backend.app.models.chat import ChatRequest, ChatResponse
 
 router = APIRouter()
@@ -8,17 +9,18 @@ router = APIRouter()
 OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
 OLLAMA_MODEL = "qwen2.5:3b"
 
-conversation_history = {}
+memory = ConversationMemory()
 
 
 @router.post("/chat", response_model=ChatResponse)
 def chat(request: ChatRequest):
-    history = conversation_history.setdefault(request.session_id, [])
+    memory.add_message(
+        request.session_id,
+        "user",
+        request.message,
+    )
 
-    history.append({
-        "role": "user",
-        "content": request.message,
-    })
+    history = memory.get_history(request.session_id)
 
     prompt_parts = [
         "You are DevSentry, an AI-powered DevOps assistant.",
@@ -52,10 +54,11 @@ def chat(request: ChatRequest):
     data = response.json()
     assistant_response = data["response"].strip()
 
-    history.append({
-        "role": "assistant",
-        "content": assistant_response,
-    })
+    memory.add_message(
+        request.session_id,
+        "assistant",
+        assistant_response,
+    )
 
     return ChatResponse(
         response=assistant_response,
