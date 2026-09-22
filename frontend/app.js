@@ -2,27 +2,15 @@ const chatForm = document.getElementById("chat-form");
 const messageInput = document.getElementById("message-input");
 const messages = document.getElementById("messages");
 
-let sessionId = localStorage.getItem("devsentry_session_id");
-
-if (!sessionId) {
-    sessionId =
-            "session-" +
-            Date.now() +
-            "-" +
-            Math.random().toString(36).substring(2, 10);
-    localStorage.setItem("devsentry_session_id", sessionId);
-}
-
 function addMessage(role, text) {
     const message = document.createElement("div");
-
-    message.className = `message ${role}`;
+    message.className = "message " + role;
     message.textContent = text;
-
     messages.appendChild(message);
+    messages.scrollTop = messages.scrollHeight;
 }
 
-chatForm.addEventListener("submit", async (event) => {
+chatForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const message = messageInput.value.trim();
@@ -32,10 +20,12 @@ chatForm.addEventListener("submit", async (event) => {
     }
 
     addMessage("user", message);
-
     messageInput.value = "";
 
-    addMessage("assistant", "Thinking...");
+    const thinking = document.createElement("div");
+    thinking.className = "message assistant";
+    thinking.textContent = "Thinking...";
+    messages.appendChild(thinking);
 
     try {
         const response = await fetch("/chat", {
@@ -45,21 +35,21 @@ chatForm.addEventListener("submit", async (event) => {
             },
             body: JSON.stringify({
                 message: message,
-                session_id: sessionId
+                session_id: "browser-demo"
             })
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}`);
-        }
-
         const data = await response.json();
 
-        messages.lastElementChild.textContent = data.response;
+        if (!response.ok) {
+            throw new Error(
+                data.detail || `HTTP ${response.status}`
+            );
+        }
 
+        thinking.textContent = data.response;
     } catch (error) {
-        messages.lastElementChild.textContent =
-            "Unable to connect to DevSentry backend.";
-        console.error(error);
+        thinking.textContent = "Error: " + error.message;
+        console.error("DevSentry chat error:", error);
     }
 });
