@@ -5,7 +5,11 @@ const messages = document.getElementById("messages");
 let sessionId = localStorage.getItem("devsentry_session_id");
 
 if (!sessionId) {
-    sessionId = crypto.randomUUID();
+    sessionId =
+            "session-" +
+            Date.now() +
+            "-" +
+            Math.random().toString(36).substring(2, 10);
     localStorage.setItem("devsentry_session_id", sessionId);
 }
 
