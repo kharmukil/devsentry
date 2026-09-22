@@ -31,3 +31,11 @@ build/
 *.egg-info/
 # Allow sample logs to be versioned
 !sample-data/logs/**/*.log
+# Secrets and private keys
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
